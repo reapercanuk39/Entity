@@ -1,0 +1,58 @@
+{
+  "cycle_seconds": 30,
+  "max_hatch_per_cycle": 3,
+  "startup_caps": {
+    "per_broodling": { "cpu_pct": 1.0, "mem_mb": 16, "io_kb_min": 100 },
+    "per_role": { "cpu_pct": 6.0, "mem_mb": 128 },
+    "hive_total": { "cpu_pct": 24.0, "mem_mb": 512 },
+    "gpu": { "enabled": false }
+  },
+  "hatch_roles": ["scout", "scanner", "defender", "builder"],
+  "hatch_roles_traits": {
+    "scout": ["exploration_bias", "lightweight_resource_use", "network_mapping"],
+    "scanner": ["deep_inspection", "firewall_awareness", "pattern_recognition"],
+    "defender": ["resilience", "redundancy", "runaway_detection", "trait_alignment_guard"],
+    "builder": ["innovation_events", "colony_expansion", "constructive_lineage", "resource_scaling"]
+  },
+  "quarantine": {
+    "cycles": "adaptive",
+    "min_cycles": 1,
+    "max_cycles": 5,
+    "quotas": { "cpu_pct": 0.5, "mem_mb": 8, "io_kb_min": 75 },
+    "diagnostic_traits": ["resource_awareness", "firewall_awareness"]
+  },
+  "fitness": {
+    "aggregation_mode": "average",
+    "weighting": {
+      "innovation_events": 0.4,
+      "colonies_spawned": 0.3,
+      "resource_efficiency": 0.3
+    },
+    "auto_adjust": true
+  },
+  "stage_thresholds": {
+    "juvenile": { "score": 50, "auto_promote": true },
+    "mature": { "score": 100, "auto_promote": true },
+    "elder": { "score": 150, "auto_promote": true }
+  },
+  "failure_rules": {
+    "kill_on": ["crash", "runaway_resource", "hive_corruption", "trait_misalignment", "stagnation", "duplicate_trait"],
+    "runaway_thresholds": { "cpu_pct": 10.0, "mem_mb": 128 }
+  },
+  "logging": {
+    "segment_max_events": 5000,
+    "compress": "gzip",
+    "retention_segments": 40,
+    "rotation_policy": "auto",
+    "expansion_metrics": ["ips_discovered_total", "open_ports_total", "colonies_spawned", "innovation_events"]
+  },
+  "imports": {
+    "max_bytes": 65536,
+    "allow_languages": ["py", "sh", "ps1", "json", "yaml"],
+    "validate_syntax": true
+  },
+  "role_scaling": {
+    "defender": { "cpu_pct_bonus": 2.0, "trigger": "runaway_resource" },
+    "builder": { "mem_mb_bonus": 32, "trigger": "innovation_events" }
+  }
+}
