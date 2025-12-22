@@ -498,6 +498,8 @@ class Audit:
             "checkpoint": os.path.join(self.log_dir, "checkpoints.log"),
             "queen_state": os.path.join(self.log_dir, "queen_state.log"),
             "errors": os.path.join(self.log_dir, "errors.log"),
+            "expansion": os.path.join(self.log_dir, "expansion.log"),
+            "replacement": os.path.join(self.log_dir, "replacement.log"),
         }
 
     def _archive_if_needed(self, path):
@@ -841,51 +843,75 @@ audit = Audit(root='.')
 
 class Scout(BroodlingBase):
     def tick(self, ip_range=None, ports=None, **kwargs):
-        # Multi-range probe telemetry
-        self.telemetry["ip_ranges"] = ip_range or ["192.168.0.0/24", "10.0.0.0/24"]
-
-        # Port scan telemetry
-        open_ports, blocked_ports = [], []
-        for port in (ports or [22, 80, 443]):
-            if random.random() < 0.2:
-                open_ports.append(port)
+        # Start scanning from given ip_range or default gateway 10.0.0.1
+        start_ip = None
+        if ip_range:
+            if isinstance(ip_range, (list, tuple)):
+                start_ip = str(ip_range[0])
             else:
-                blocked_ports.append(port)
-        self.telemetry["open_ports"] = open_ports
-        self.telemetry["blocked_ports"] = blocked_ports
+                start_ip = str(ip_range)
+        start_ip = start_ip or "10.0.0.1"
+
+        # Derive a /24 prefix to simulate connected Wi-Fi devices
+        try:
+            parts = start_ip.split('.')
+            prefix = '.'.join(parts[0:3])
+        except Exception:
+            prefix = '10.0.0'
+
+        # Simulate discovery of nearby devices on the same Wi-Fi
+        found_ips = []
+        ip_open_ports = {}
+        num_found = random.randint(0, 5)
+        scan_ports = ports or [22, 80, 443, 8080]
+        for _ in range(num_found):
+            last = random.randint(2, 250)
+            ip = f"{prefix}.{last}"
+            found_ips.append(ip)
+            # Simulate per-device open ports (higher chance than before)
+            open_ports = [p for p in scan_ports if random.random() < 0.35]
+            ip_open_ports[ip] = open_ports
+
+        # Populate telemetry fields used by Queen.expand_colony
+        self.telemetry["ip_ranges"] = [f"{prefix}.0/24"]
+        self.telemetry["found_ips"] = found_ips
+        self.telemetry["ip_open_ports"] = ip_open_ports
+        self.telemetry["ips_discovered"] = len(found_ips)
+        # Flatten open ports across discovered devices
+        self.telemetry["open_ports"] = list({p for ports in ip_open_ports.values() for p in ports})
+        self.telemetry["blocked_ports"] = []
 
         # Resource telemetry
-        self.telemetry["cpu_pct"] = random.uniform(10, 90)
-        self.telemetry["ram_pct"] = random.uniform(10, 90)
-        self.telemetry["io_wait"] = random.uniform(0, 50)
+        self.telemetry["cpu_pct"] = random.uniform(5, 60)
+        self.telemetry["ram_pct"] = random.uniform(5, 60)
+        self.telemetry["io_wait"] = random.uniform(0, 30)
 
         # Environment telemetry
-        self.telemetry["latency_ms"] = random.randint(10, 300)
+        self.telemetry["latency_ms"] = random.randint(5, 200)
         self.telemetry["os_type"] = random.choice(["linux", "windows", "macos"])
+        self.telemetry["connected_wifi"] = True
 
-        # Stealth flags
-        self.apply_trait_flags(["timing_obfuscation", "signal_masking", "low_signature_scan"])
-
-        # Trait fusion
+        # Apply trait flags and possible fusions
+        self.apply_trait_flags(["network_probe", "port_scan"])
         self.apply_trait_fusion({
             ("network_probe", "stealth_mode"): "ghost_probe"
         })
 
-        # Fitness calculation
-        self.fitness = len(open_ports) * 2 + len(self.telemetry["ip_ranges"])
+        # Fitness calculation: reward discoveries and open ports
+        self.fitness = len(self.telemetry["open_ports"]) * 3 + len(found_ips)
         self.cycle += 1
 
         # Audit logging
-        if "multi_range_probe" in self.traits:
-            audit.log_trait_activity(self, "multi_range_probe", f"Ranges={self.telemetry['ip_ranges']}")
+        if found_ips:
+            audit.log_trait_activity(self, "multi_range_probe", f"FoundIPs={found_ips}")
             try:
-                audit.log_ip_check(self, self.telemetry['ip_ranges'])
+                audit.log_ip_check(self, found_ips)
             except Exception:
                 pass
-        if "port_scan" in self.traits:
-            audit.log_trait_activity(self, "port_scan", f"Open={open_ports}, Blocked={blocked_ports}")
+        if self.telemetry["open_ports"]:
+            audit.log_trait_activity(self, "port_scan", f"Open={self.telemetry['open_ports']}")
             try:
-                audit.log_port_check(self, open_ports, blocked_ports)
+                audit.log_port_check(self, self.telemetry['open_ports'], self.telemetry.get('blocked_ports', []))
             except Exception:
                 pass
         if self.fused_traits:
@@ -1538,18 +1564,38 @@ class Queen:
 
         new_queen = Queen()
         new_queen.stage = "juvenile"
+        # inherit existing genetic memory
         new_queen.genetic_memory = self.genetic_memory.copy()
 
+        # Add travel/connectivity traits
         travel_traits = ["ssh_hop", "adb_tunnel"]
         for trait in travel_traits:
             if trait not in new_queen.genetic_memory:
                 new_queen.genetic_memory.append(trait)
 
+        # If telemetry included detailed ips/ports, encode them into genetic memory
+        found_ips = discovered.get("found_ips") or []
+        ip_open_ports = discovered.get("ip_open_ports") or {}
+        for ip, ports in ip_open_ports.items():
+            for p in ports:
+                t = f"port_{p}"
+                if t not in new_queen.genetic_memory:
+                    new_queen.genetic_memory.append(t)
+        # mark that network probing succeeded
+        if found_ips and "network_probe" not in new_queen.genetic_memory:
+            new_queen.genetic_memory.append("network_probe")
+
         print(f"Juvenile Queen spawned at {ip_range} with traits: {new_queen.genetic_memory}")
         if self.audit:
             self.audit.log("expansion", {"ip_range": ip_range, "traits": new_queen.genetic_memory, "telemetry": discovered})
 
-        self.colonies.append({"ip_range": ip_range, "queen": new_queen})
+        # record discovered ips and open ports with the colony entry
+        self.colonies.append({
+            "ip_range": ip_range,
+            "queen": new_queen,
+            "discovered_ips": found_ips,
+            "ip_open_ports": ip_open_ports,
+        })
         return new_queen
 
     def run_cycle(self):
