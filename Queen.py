@@ -9,6 +9,9 @@ import random
 import itertools
 import string
 import logging
+from collections import Counter
+from datetime import datetime
+from typing import Dict, Any
 
 
 # Telemetry shim
@@ -347,6 +350,26 @@ class BroodlingBase:
         """Return the latest telemetry for trait evaluation."""
         return self.telemetry
 
+    def apply_trait_flags(self, flags):
+        """Apply simple boolean trait flags into telemetry.traits."""
+        if not isinstance(flags, (list, tuple)):
+            return
+        current = set(self.telemetry.get("traits", []))
+        current.update(flags)
+        self.telemetry["traits"] = list(current)
+
+    def apply_trait_fusion(self, fusion_map):
+        """Apply simple fusion mapping: if required traits present, set fused_traits."""
+        self.fused_traits = None
+        try:
+            for reqs, fused in (fusion_map or {}).items():
+                needed = set(reqs if isinstance(reqs, (list, tuple)) else [reqs])
+                if needed.issubset(set(self.traits or [])):
+                    self.fused_traits = fused
+                    self.telemetry.setdefault("fused_traits", []).append(fused)
+        except Exception:
+            pass
+
 # --- End: Modules/Snippets/Base_Broodling.py ---
 
 
@@ -542,6 +565,24 @@ class Audit:
         except Exception as e:
             print(f"[Audit] Failed to read log {category}: {e}")
             return []
+
+    def log(self, category, entry):
+        try:
+            self._log(category, entry if isinstance(entry, dict) else {"message": entry})
+        except Exception:
+            pass
+
+    def log_policy_change(self, message):
+        try:
+            self._log("policy", {"message": message})
+        except Exception:
+            pass
+
+    def log_queen_state(self, queen):
+        try:
+            self._log("queen_state", {"global_cycle": getattr(queen, 'global_cycle', None), "hive_stats": getattr(queen, 'hive_stats', {})})
+        except Exception:
+            pass
 
 
 # 🔎 New: Auditor class for error logging
@@ -952,6 +993,9 @@ class QueenMemory:
 
         # Persistent lineage file
         self.lineage_file = lineage_file
+        d = os.path.dirname(self.lineage_file)
+        if d:
+            os.makedirs(d, exist_ok=True)
         if not os.path.exists(self.lineage_file):
             with open(self.lineage_file, "w") as f:
                 json.dump({"traits": {}, "errors": {}, "cycles": []}, f)
@@ -1163,6 +1207,10 @@ class QueenMemory:
     # Accessors
     # ----------------
 
+    def get_lineage(self):
+        """Return a list of promoted lineage traits."""
+        return list(self.lineage_traits)
+
 # --- End: Memory/QueenMemory.py ---
 
 
@@ -1172,6 +1220,20 @@ class QueenMemory:
 import json
 
 audit = Audit(root=".")
+
+class GeneticMemory:
+    """Minimal GeneticMemory shim used by Policy in merged context."""
+    def __init__(self):
+        self.events = []
+
+    def record_event(self, name, data=None):
+        try:
+            self.events.append({"event": name, "data": data})
+        except Exception:
+            pass
+
+    def to_list(self):
+        return list(self.events)
 
 class Policy:
     def __init__(self, config=None):
@@ -1351,7 +1413,7 @@ class Queen:
         self.colonies = []
         self.genetic_memory = []
         self.audit = Audit(root=".")
-        self.storage = Storage(root=".", audit=self.audit)
+        self.storage = StorageV2(root=".", audit=self.audit)
 
         # Mutation/behavior knobs
         self.base_mutation_prob = 0.15
