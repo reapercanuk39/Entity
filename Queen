@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+import os
+import sys
+
+# Simple executable wrapper to run Queen.py in this directory without typing 'python'
+HERE = os.path.dirname(__file__)
+SCRIPT = os.path.join(HERE, 'Queen.py')
+
+if not os.path.exists(SCRIPT):
+    sys.stderr.write('Queen.py not found in script directory\n')
+    sys.exit(2)
+
+# Execute using the same Python interpreter
+os.execv(sys.executable, [sys.executable, SCRIPT] + sys.argv[1:])
