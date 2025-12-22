@@ -2303,6 +2303,8 @@ def cli_menu(path="queen_config.json"):
         print("5) Toggle ADB connector (currently: {} )".format(cfg["enable_adb_connector"]))
         print("6) Save and exit")
         print("7) Exit without saving")
+        print("8) Create systemd unit file (queen.service) in current directory")
+        print("9) Attempt to install & start systemd service (requires root)")
 
     while True:
         show()
@@ -2337,6 +2339,45 @@ def cli_menu(path="queen_config.json"):
         elif choice == "7":
             print("Discarding changes and exiting.")
             return
+        elif choice == "8":
+            # create a systemd unit file in current directory
+            try:
+                import sys
+                script = os.path.abspath(__file__)
+                python_exec = sys.executable or "/usr/bin/env python3"
+                workdir = os.path.dirname(script)
+                svc = f"""[Unit]\nDescription=Queen daemon (local)\nAfter=network.target\n\n[Service]\nType=simple\nExecStart={python_exec} {script} --config {os.path.abspath(path)}\nWorkingDirectory={workdir}\nRestart=on-failure\nRestartSec=10\nEnvironment=ALLOW_LIVE=1\n\n[Install]\nWantedBy=multi-user.target\n"""
+                target = os.path.join(os.getcwd(), 'queen.service')
+                with open(target, 'w', encoding='utf-8') as f:
+                    f.write(svc)
+                print('Wrote systemd unit to', target)
+                print('To install as a system service run as root:\n  sudo mv queen.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable queen.service && sudo systemctl start queen.service')
+            except Exception as e:
+                print('Failed to create unit file:', e)
+        elif choice == "9":
+            # attempt to install and start the service (requires root)
+            try:
+                if os.geteuid() != 0:
+                    print('Installation requires root. Re-run menu as root or use option 8 to create a unit file for manual install.')
+                else:
+                    import sys
+                    script = os.path.abspath(__file__)
+                    python_exec = sys.executable or "/usr/bin/env python3"
+                    workdir = os.path.dirname(script)
+                    svc = f"""[Unit]\nDescription=Queen daemon (local)\nAfter=network.target\n\n[Service]\nType=simple\nExecStart={python_exec} {script} --config {os.path.abspath(path)}\nWorkingDirectory={workdir}\nRestart=on-failure\nRestartSec=10\nEnvironment=ALLOW_LIVE=1\n\n[Install]\nWantedBy=multi-user.target\n"""
+                    dest = '/etc/systemd/system/queen.service'
+                    with open(dest, 'w', encoding='utf-8') as f:
+                        f.write(svc)
+                    print('Wrote unit to', dest)
+                    try:
+                        subprocess.run(['systemctl', 'daemon-reload'], check=False)
+                        subprocess.run(['systemctl', 'enable', 'queen.service'], check=False)
+                        subprocess.run(['systemctl', 'start', 'queen.service'], check=False)
+                        print('Attempted to enable and start queen.service (check systemctl status for details)')
+                    except Exception as e:
+                        print('Failed to start service via systemctl:', e)
+            except Exception as e:
+                print('Error during installation:', e)
         else:
             print("Unknown option")
 
