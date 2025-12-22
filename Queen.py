@@ -9,6 +9,8 @@ import random
 import itertools
 import string
 import logging
+import subprocess
+import copy
 from collections import Counter
 from datetime import datetime
 from typing import Dict, Any
@@ -20,6 +22,148 @@ class Telemetry:
         return {"cpu_pct":0, "mem_mb":0, "traits": []}
     def environment(self):
         return {"avg_cpu_pct":0.0, "avg_mem_mb":0.0}
+
+# Filesystem knowledge base (high-level mapping, used for safe recommendations)
+FILESYSTEM_KNOWLEDGE = {
+    "linux": {
+        "bin": "/bin, /usr/bin - executable binaries",
+        "etc": "/etc - configuration files",
+        "var": "/var - variable data (logs, spools)",
+        "home": "/home - user data",
+        "lib": "/lib - shared libraries",
+    },
+    "windows": {
+        "system32": "C:\\Windows\\System32 - core OS binaries",
+        "program_files": "C:\\Program Files - installed programs",
+        "users": "C:\\Users - user profiles and data",
+        "appdata": "%APPDATA% - per-user application data",
+    },
+    "android": {
+        "system": "/system - read-only system image",
+        "data": "/data - app data and user data",
+        "sdcard": "/sdcard - external storage",
+    },
+    "macos": {
+        "system": "/System - OS components",
+        "library": "/Library - system-wide libraries and settings",
+        "users": "/Users - user directories",
+        "applications": "/Applications - installed apps",
+    }
+}
+
+# Safe connector stubs. Live actions disabled by default; require queen.allow_live True and credentials.
+class SSHConnector:
+    def __init__(self, host, port=22, user=None, key=None, password=None, allow_live=False):
+        self.host = host
+        self.port = int(port)
+        self.user = user
+        self.key = key
+        self.password = password
+        self.allow_live = allow_live
+        self._client = None
+
+    def connect(self, timeout=5):
+        if not self.allow_live:
+            return False, "live disabled"
+        try:
+            import paramiko
+            client = paramiko.SSHClient()
+            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            if self.key:
+                client.connect(self.host, port=self.port, username=self.user, key_filename=self.key, timeout=timeout)
+            else:
+                client.connect(self.host, port=self.port, username=self.user, password=self.password, timeout=timeout)
+            self._client = client
+            return True, "connected"
+        except Exception as e:
+            return False, str(e)
+
+    def run_cmd(self, cmd, timeout=10):
+        if not self._client:
+            ok, msg = self.connect()
+            if not ok:
+                return False, msg
+        try:
+            stdin, stdout, stderr = self._client.exec_command(cmd, timeout=timeout)
+            return True, stdout.read().decode(errors='ignore')
+        except Exception as e:
+            return False, str(e)
+
+    def close(self):
+        if self._client:
+            try:
+                self._client.close()
+            except Exception:
+                pass
+
+class ADBConnector:
+    """Minimal ADB wrapper that uses adb executable if allowed. Disabled unless allow_live True and ADB in PATH."""
+    def __init__(self, device=None, allow_live=False):
+        self.device = device
+        self.allow_live = allow_live
+
+    def shell(self, cmd, timeout=10):
+        if not self.allow_live:
+            return False, "live disabled"
+        try:
+            args = ["adb"]
+            if self.device:
+                args += ["-s", self.device]
+            args += ["shell", cmd]
+            out = subprocess.check_output(args, stderr=subprocess.STDOUT, timeout=timeout)
+            return True, out.decode(errors='ignore')
+        except Exception as e:
+            return False, str(e)
+
+class SCPConnector:
+    def __init__(self, host, port=22, user=None, key=None, password=None, allow_live=False):
+        self.ssh = SSHConnector(host, port, user, key, password, allow_live)
+
+    def put(self, local, remote):
+        if not self.ssh.allow_live:
+            return False, 'live disabled'
+        try:
+            import paramiko
+            transport = paramiko.Transport((self.ssh.host, self.ssh.port))
+            if self.ssh.key:
+                pkey = paramiko.RSAKey.from_private_key_file(self.ssh.key)
+                transport.connect(username=self.ssh.user, pkey=pkey)
+            else:
+                transport.connect(username=self.ssh.user, password=self.ssh.password)
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            sftp.put(local, remote)
+            sftp.close()
+            transport.close()
+            return True, 'ok'
+        except Exception as e:
+            return False, str(e)
+
+class TCPConnector:
+    def __init__(self, host, port, allow_live=False):
+        self.host = host
+        self.port = int(port)
+        self.allow_live = allow_live
+
+    def connect(self, timeout=1.0):
+        if not self.allow_live:
+            return False, 'live disabled'
+        try:
+            import socket
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(timeout)
+            res = s.connect_ex((self.host, self.port))
+            s.close()
+            return res == 0, res
+        except Exception as e:
+            return False, str(e)
+
+# Helper to safely merge genetic memory between queens
+def merge_genetic_memory(dest_list, src_list):
+    for item in src_list:
+        if item not in dest_list:
+            dest_list.append(item)
+    return dest_list
+
 
 
 
@@ -325,6 +469,7 @@ TRAIT_DEFINITIONS: Dict[str, Dict[str, Dict[str, Any]]] = {
 
 
 class BroodlingBase:
+    """Base broodling; can reference parent queen for permissions and helpers."""
     """
     Base broodling template. The Queen uses this to hatch any broodling type
     (scout, scanner, defender, builder, etc.) by assigning a role and traits.
@@ -1569,6 +1714,8 @@ import os
 class Queen:
     def __init__(self, config_path="queen_config.json"):
         self.cfg = self._load_config(config_path)
+        # runtime safety flag: live actions disabled by default
+        self.allow_live = bool(self.cfg.get("allow_live_actions", False)) or os.environ.get("ALLOW_LIVE") == "1"
         self.policy = Policy(config=self.cfg)
         self.memory = QueenMemory()
         self.broodlings = []
@@ -1577,6 +1724,12 @@ class Queen:
         self.genetic_memory = []
         self.audit = Audit(root=".")
         self.storage = StorageV2(root=".", audit=self.audit)
+        # Restore last checkpoint state if present to ensure persistence across runs
+        try:
+            self._restore_state()
+        except Exception:
+            # non-fatal
+            pass
 
         # Mutation/behavior knobs
         self.base_mutation_prob = 0.15
@@ -1623,6 +1776,32 @@ class Queen:
     def generate_tag(self):
         return f"BRD-{''.join(random.choices(string.ascii_uppercase + string.digits, k=6))}"
 
+    def _restore_state(self):
+        """Load latest checkpoint (if any) and restore genetic memory and last endpoint."""
+        try:
+            chk_dir = os.path.join('.', 'logs')
+            if not os.path.exists(chk_dir):
+                return
+            files = [f for f in os.listdir(chk_dir) if f.startswith('checkpoint_') and f.endswith('.json')]
+            if not files:
+                return
+            files = sorted(files)
+            path = os.path.join(chk_dir, files[-1])
+            with open(path, 'r', encoding='utf-8') as fh:
+                data = json.load(fh)
+            # restore genetic memory if present
+            gm = data.get('genetic_memory')
+            if gm:
+                # flatten representations
+                self.genetic_memory = [ (g if not isinstance(g, dict) else g.get('name', str(g))) for g in gm ]
+            # restore last known hive stats endpoint
+            last_ip = None
+            colonies = data.get('colonies_spawned')
+            if last_ip is None and 'hive_population' in data:
+                pass
+        except Exception:
+            pass
+
     def hatch_broodling(self, role="scout", traits=None):
         if traits is None:
             traits = self.decide_traits()
@@ -1642,6 +1821,11 @@ class Queen:
             b = Builder(tag=self.generate_tag(), role=role, traits=traits)
         else:
             b = BroodlingBase(tag=self.generate_tag(), role=role, traits=traits)
+        # link broodling back to queen for context and live-action permission
+        try:
+            b.parent = self
+        except Exception:
+            pass
 
         # Delegate trait inheritance + lifecycle registration to QueenMemory
         self.memory.inherit_traits(b)
