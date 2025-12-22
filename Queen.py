@@ -11,9 +11,13 @@ import string
 import logging
 import subprocess
 import copy
+import warnings
 from collections import Counter
 from datetime import datetime
 from typing import Dict, Any
+
+# Suppress DeprecationWarning from datetime.utcnow usage in this script
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
 # Telemetry shim
