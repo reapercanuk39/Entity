@@ -1806,6 +1806,48 @@ class Queen:
         except Exception:
             pass
 
+    def _now(self):
+        try:
+            return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        except Exception:
+            return time.strftime('%Y-%m-%d %H:%M:%S')
+
+    def _log_event(self, tag, msg):
+        """Standardized small log line for terminal output."""
+        try:
+            ts = self._now()
+            print(f"[{ts}] [{tag}] {msg}")
+        except Exception:
+            try:
+                print(f"[{tag}] {msg}")
+            except Exception:
+                pass
+
+        """Load latest checkpoint (if any) and restore genetic memory and last endpoint."""
+        try:
+            chk_dir = os.path.join('.', 'logs')
+            if not os.path.exists(chk_dir):
+                return
+            files = [f for f in os.listdir(chk_dir) if f.startswith('checkpoint_') and f.endswith('.json')]
+            if not files:
+                return
+            files = sorted(files)
+            path = os.path.join(chk_dir, files[-1])
+            with open(path, 'r', encoding='utf-8') as fh:
+                data = json.load(fh)
+            # restore genetic memory if present
+            gm = data.get('genetic_memory')
+            if gm:
+                # flatten representations
+                self.genetic_memory = [ (g if not isinstance(g, dict) else g.get('name', str(g))) for g in gm ]
+            # restore last known hive stats endpoint
+            last_ip = None
+            colonies = data.get('colonies_spawned')
+            if last_ip is None and 'hive_population' in data:
+                pass
+        except Exception:
+            pass
+
     def hatch_broodling(self, role="scout", traits=None):
         if traits is None:
             traits = self.decide_traits()
@@ -1884,7 +1926,12 @@ class Queen:
         if found_ips and "network_probe" not in new_queen.genetic_memory:
             new_queen.genetic_memory.append("network_probe")
 
-        print(f"Juvenile Queen spawned at {ip_range} with traits: {new_queen.genetic_memory}")
+        # Log a concise spawn message
+        try:
+            self._log_event("SPAWN", f"Juvenile queen at {ip_range} | discovered={len(found_ips)} ips | inherited_traits={len(new_queen.genetic_memory)}")
+        except Exception:
+            print(f"Juvenile Queen spawned at {ip_range} with traits: {new_queen.genetic_memory}")
+
         if self.audit:
             self.audit.log("expansion", {"ip_range": ip_range, "traits": new_queen.genetic_memory, "telemetry": discovered})
 
@@ -2006,7 +2053,10 @@ class Queen:
         if self.global_cycle == self.replacement_cycle:
             successor = Queen()
             successor.genetic_memory = self.genetic_memory.copy()
-            print(f"Replacement Queen spawned at cycle {self.global_cycle} with inherited traits: {successor.genetic_memory}")
+            try:
+                self._log_event("SPAWN", f"Replacement queen spawned | cycle={self.global_cycle} | inherited_traits={len(successor.genetic_memory)}")
+            except Exception:
+                print(f"Replacement Queen spawned at cycle {self.global_cycle} with inherited traits: {successor.genetic_memory}")
             if self.audit:
                 self.audit.log("replacement", {"cycle": self.global_cycle, "traits": successor.genetic_memory})
             self.colonies.append({"type": "successor", "queen": successor})
@@ -2045,7 +2095,12 @@ class Queen:
         except Exception:
             pass
 
-        print(f"Cycle {self.global_cycle} complete → {len(self.broodlings)} broodlings active")
+        # concise status line
+        try:
+            avg_fit = self.hive_stats.get('avg_fitness') if isinstance(self.hive_stats, dict) else None
+            self._log_event("CYCLE", f"{self.global_cycle} | broodlings={len(self.broodlings)} | colonies={len(self.colonies)} | avg_fit={avg_fit if avg_fit is not None else 'N/A'}")
+        except Exception:
+            print(f"Cycle {self.global_cycle} complete → {len(self.broodlings)} broodlings active")
         return successor
 
     def print_dashboard(self, max_entries: int = 50, show_more: bool = True):
