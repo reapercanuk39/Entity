@@ -494,6 +494,10 @@ class Audit:
             "fusion": os.path.join(self.log_dir, "fusion.log"),
             "ips": os.path.join(self.log_dir, "ips_checked.log"),
             "ports": os.path.join(self.log_dir, "ports_checked.log"),
+            "policy": os.path.join(self.log_dir, "policy.log"),
+            "checkpoint": os.path.join(self.log_dir, "checkpoints.log"),
+            "queen_state": os.path.join(self.log_dir, "queen_state.log"),
+            "errors": os.path.join(self.log_dir, "errors.log"),
         }
 
     def _archive_if_needed(self, path):
@@ -1222,18 +1226,40 @@ import json
 audit = Audit(root=".")
 
 class GeneticMemory:
-    """Minimal GeneticMemory shim used by Policy in merged context."""
-    def __init__(self):
-        self.events = []
+    """Richer GeneticMemory used by Policy to record events and maintain simple counters.
 
-    def record_event(self, name, data=None):
+    This is intentionally lightweight but provides useful helpers used across Policy methods.
+    """
+    def __init__(self, max_events: int = 5000):
+        self.events = []
+        self.max_events = int(max_events)
+        self.counters = Counter()
+
+    def record_event(self, name: str, data: dict | None = None):
+        entry = {"time": datetime.utcnow().isoformat(), "event": name, "data": data}
         try:
-            self.events.append({"event": name, "data": data})
+            self.events.append(entry)
+            self.counters[name] += 1
+            # keep bounded
+            if len(self.events) > self.max_events:
+                self.events.pop(0)
         except Exception:
+            # swallow to avoid breaking Policy
             pass
 
     def to_list(self):
         return list(self.events)
+
+    def recent(self, n: int = 10):
+        return list(self.events[-int(n):])
+
+    def count(self, event_name: str):
+        return int(self.counters.get(event_name, 0))
+
+    def clear(self):
+        self.events.clear()
+        self.counters.clear()
+
 
 class Policy:
     def __init__(self, config=None):
