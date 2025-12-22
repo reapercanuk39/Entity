@@ -2044,6 +2044,92 @@ class Queen:
         print(f"Cycle {self.global_cycle} complete → {len(self.broodlings)} broodlings active")
         return successor
 
+    def print_dashboard(self, max_entries: int = 50, show_more: bool = True):
+        """Print a concise single-shot dashboard: cycle, broodlings, colonies with unique ip:port entries.
+        If show_more=True include avg_fitness, avg_latency, recent innovations, genetic memory size and live-permission state."""
+        try:
+            print("\n=== Queen Dashboard ===")
+            print(f"Cycle: {self.global_cycle}")
+            print(f"Broodlings active: {len(self.broodlings)}")
+            print(f"Total colonies: {len(self.colonies)}")
+
+            # aggregate avg_fitness
+            avg_fit = self.hive_stats.get('avg_fitness') if isinstance(self.hive_stats, dict) else None
+            print(f"Average fitness: {avg_fit if avg_fit is not None else 'N/A'}")
+
+            # avg latency across broodlings
+            try:
+                if self.broodlings:
+                    avg_latency = sum(b.telemetry.get('latency_ms', 0) for b in self.broodlings) / max(1, len(self.broodlings))
+                else:
+                    avg_latency = None
+            except Exception:
+                avg_latency = None
+            print(f"Average latency (ms): {avg_latency if avg_latency is not None else 'N/A'}")
+
+            # recent innovations
+            innovations = self.hive_stats.get('innovation_events') if isinstance(self.hive_stats, dict) else []
+            if innovations:
+                recent = innovations[-10:]
+                print(f"Recent innovation events (count {len(innovations)}): {recent}")
+            else:
+                print("Recent innovation events: none")
+
+            print(f"Genetic memory size (root queen): {len(self.genetic_memory)}")
+            print(f"Live actions allowed on this device: {bool(self.allow_live)}")
+
+            seen = set()
+            entries = []
+            for idx, c in enumerate(self.colonies):
+                if not isinstance(c, dict):
+                    continue
+                ip_range = c.get('ip_range') or c.get('ip')
+                discovered = c.get('discovered_ips') or []
+                ip_open = c.get('ip_open_ports') or {}
+                for ip in discovered:
+                    ports = ip_open.get(ip) or []
+                    if ports:
+                        for p in ports:
+                            key = f"{ip}:{p}"
+                            if key in seen:
+                                continue
+                            seen.add(key)
+                            entries.append((ip, p, idx))
+                            if len(entries) >= max_entries:
+                                break
+                    else:
+                        key = f"{ip}:-"
+                        if key in seen:
+                            continue
+                        seen.add(key)
+                        entries.append((ip, None, idx))
+                    if len(entries) >= max_entries:
+                        break
+                if len(entries) >= max_entries:
+                    break
+                if not discovered and ip_range:
+                    key = f"{ip_range}:-"
+                    if key not in seen:
+                        seen.add(key)
+                        entries.append((ip_range, None, idx))
+                if len(entries) >= max_entries:
+                    break
+
+            print('\nLinked devices (sample up to {}):'.format(max_entries))
+            if not entries:
+                print('  (no discovered devices yet)')
+            for ip, port, col_idx in entries:
+                port_str = str(port) if port else '-'
+                qobj = self.colonies[col_idx].get('queen')
+                qid = getattr(qobj, 'global_cycle', None) or id(qobj)
+                traits = getattr(qobj, 'genetic_memory', []) if qobj else []
+                # also include colony's last discovered ips count
+                discovered_count = len(self.colonies[col_idx].get('discovered_ips') or [])
+                print(f"  {ip}:{port_str}  -> colony[{col_idx}] queen_id={qid} traits={len(traits)} discoveries={discovered_count}")
+            print('=== end dashboard ===\n')
+        except Exception:
+            print('Failed to render dashboard')
+
 # --- End: Queen.py ---
 
 
@@ -2178,3 +2264,145 @@ def main():
 
 
 # --- End: Modules/Dashboard.py ---
+
+# --- CLI menu for local device control ---
+def _load_local_config(path="queen_config.json"):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def _save_local_config(cfg, path="queen_config.json"):
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(cfg, f, indent=2)
+        return True
+    except Exception as e:
+        print("Failed to save config:", e)
+        return False
+
+
+def cli_menu(path="queen_config.json"):
+    """Simple text menu to enable/disable Queen capabilities for this device only."""
+    cfg = _load_local_config(path)
+    # defaults
+    cfg.setdefault("allow_live_actions", False)
+    cfg.setdefault("enable_real_scan", False)
+    cfg.setdefault("max_hatch_per_cycle", 2)
+    cfg.setdefault("enable_ssh_connector", False)
+    cfg.setdefault("enable_adb_connector", False)
+
+    def show():
+        print("\nQueen local configuration menu")
+        print("1) Toggle live actions (currently: {} )".format(cfg["allow_live_actions"]))
+        print("2) Toggle real_scan probing (currently: {} )".format(cfg["enable_real_scan"]))
+        print("3) Set max_hatch_per_cycle (currently: {} )".format(cfg["max_hatch_per_cycle"]))
+        print("4) Toggle SSH connector (currently: {} )".format(cfg["enable_ssh_connector"]))
+        print("5) Toggle ADB connector (currently: {} )".format(cfg["enable_adb_connector"]))
+        print("6) Save and exit")
+        print("7) Exit without saving")
+
+    while True:
+        show()
+        try:
+            choice = input("Select option: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting menu.")
+            return
+        if choice == "1":
+            cfg["allow_live_actions"] = not cfg["allow_live_actions"]
+            print("allow_live_actions =>", cfg["allow_live_actions"])
+        elif choice == "2":
+            cfg["enable_real_scan"] = not cfg["enable_real_scan"]
+            print("enable_real_scan =>", cfg["enable_real_scan"])
+        elif choice == "3":
+            val = input("Enter max_hatch_per_cycle (int): ").strip()
+            try:
+                cfg["max_hatch_per_cycle"] = int(val)
+            except Exception:
+                print("Invalid integer")
+        elif choice == "4":
+            cfg["enable_ssh_connector"] = not cfg["enable_ssh_connector"]
+            print("enable_ssh_connector =>", cfg["enable_ssh_connector"])
+        elif choice == "5":
+            cfg["enable_adb_connector"] = not cfg["enable_adb_connector"]
+            print("enable_adb_connector =>", cfg["enable_adb_connector"])
+        elif choice == "6":
+            ok = _save_local_config(cfg, path)
+            if ok:
+                print("Configuration saved to", path)
+            return
+        elif choice == "7":
+            print("Discarding changes and exiting.")
+            return
+        else:
+            print("Unknown option")
+
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(prog='Queen', description='Queen CLI')
+    parser.add_argument('--menu', action='store_true', help='Open local capabilities menu')
+    parser.add_argument('--config', default='queen_config.json', help='Path to local config file')
+    parser.add_argument('--dashboard', action='store_true', help='Show a concise Queen dashboard and exit')
+    parser.add_argument('--watch', action='store_true', help='Continuously refresh the dashboard (use with --dashboard)')
+    parser.add_argument('--interval', type=float, default=2.0, help='Refresh interval seconds when --watch is used')
+    args = parser.parse_args()
+
+    if args.menu:
+        cli_menu(path=args.config)
+    elif args.dashboard:
+        q = None
+        try:
+            q = Queen(config_path=args.config)
+        except Exception:
+            print('Failed to instantiate Queen for dashboard')
+        if q:
+            try:
+                if args.watch:
+                    interval = max(0.5, float(args.interval))
+                    while True:
+                        # clear screen
+                        print('\033c', end='')
+                        q.print_dashboard(max_entries=200, show_more=True)
+                        try:
+                            time.sleep(interval)
+                        except KeyboardInterrupt:
+                            print('\nExiting dashboard watch.')
+                            break
+                else:
+                    q.print_dashboard(max_entries=200, show_more=True)
+            except KeyboardInterrupt:
+                print('\nExiting dashboard.')
+    else:
+        # Default behavior: start automatic queen cycles
+        cfg = load_config(args.config)
+        cycle_seconds = cfg.get("cycle_seconds", 30)
+        print("Starting Queen automatic loop. Live actions allowed:", end=' ')
+        q = None
+        try:
+            q = Queen(config_path=args.config)
+            print(bool(q.allow_live))
+        except Exception as e:
+            print("failed to instantiate Queen:", e)
+            raise
+
+        try:
+            while True:
+                try:
+                    successor = q.run_cycle()
+                except Exception as e:
+                    print("Cycle error:", e)
+                # concise status line
+                print(f"[Queen] cycle={q.global_cycle} broodlings={len(q.broodlings)} colonies={len(q.colonies)} avg_fit={q.hive_stats.get('avg_fitness')}")
+                time.sleep(max(0.1, cycle_seconds))
+        except KeyboardInterrupt:
+            print('\nKeyboard interrupt received. Graceful shutdown...')
+            try:
+                if q and q.storage:
+                    q.storage.checkpoint(q)
+            except Exception:
+                pass
+            print('Shutdown complete.')
