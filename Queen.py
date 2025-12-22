@@ -842,8 +842,88 @@ audit = Audit(root='.')
 
 
 class Scout(BroodlingBase):
-    def tick(self, ip_range=None, ports=None, **kwargs):
-        # Start scanning from given ip_range or default gateway 10.0.0.1
+    # Real scanning helpers
+    try:
+        from scapy.all import ARP, Ether, srp, conf  # type: ignore
+        _HAS_SCAPY = True
+    except Exception:
+        _HAS_SCAPY = False
+
+    def _tcp_scan_ports(self, ip, ports, timeout=0.5):
+        import socket
+        open_ports = []
+        for p in ports:
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.settimeout(timeout)
+                res = s.connect_ex((ip, int(p)))
+                s.close()
+                if res == 0:
+                    open_ports.append(int(p))
+            except Exception:
+                continue
+        return open_ports
+
+    def _arp_discover(self, cidr):
+        # Use scapy to discover hosts on the local link when available.
+        # If scapy is not present or fails, fall back to a TCP-connect probe across the /24.
+        hosts = []
+        if getattr(self, '_HAS_SCAPY', False):
+            try:
+                # suppress verbose
+                self.scapy_conf = getattr(self, 'scapy_conf', None)
+                from scapy.all import srp, Ether, ARP, conf
+                conf.verb = 0
+                ans, _ = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=cidr), timeout=2, retry=1)
+                for _, r in ans:
+                    hosts.append(r.psrc)
+                return hosts
+            except Exception:
+                # fall through to TCP-based discovery
+                hosts = []
+
+        # Fallback: TCP-based lightweight discovery by attempting connections to common ports.
+        # Parse the cidr to derive a /24 prefix (best-effort). This is intentionally conservative.
+        try:
+            base = str(cidr).split('/')[0]
+            parts = base.split('.')
+            prefix = '.'.join(parts[0:3])
+        except Exception:
+            return []
+
+        ips = [f"{prefix}.{i}" for i in range(1, 255)]
+        common_ports = [80, 443, 22]
+        try:
+            import concurrent.futures
+            def probe(ip):
+                try:
+                    openp = self._tcp_scan_ports(ip, common_ports, timeout=0.12)
+                    return ip if openp else None
+                except Exception:
+                    return None
+
+            with concurrent.futures.ThreadPoolExecutor(max_workers=60) as exe:
+                futures = {exe.submit(probe, ip): ip for ip in ips}
+                for f in concurrent.futures.as_completed(futures, timeout=20):
+                    try:
+                        res = f.result()
+                    except Exception:
+                        res = None
+                    if res:
+                        hosts.append(res)
+        except Exception:
+            # Last-resort: try only the base gateway/start ip
+            try:
+                gw = f"{prefix}.1"
+                if self._tcp_scan_ports(gw, common_ports, timeout=0.12):
+                    hosts.append(gw)
+            except Exception:
+                pass
+
+        return hosts
+
+    def tick(self, ip_range=None, ports=None, real_scan=False, **kwargs):
+        # Determine start ip and prefix
         start_ip = None
         if ip_range:
             if isinstance(ip_range, (list, tuple)):
@@ -851,33 +931,66 @@ class Scout(BroodlingBase):
             else:
                 start_ip = str(ip_range)
         start_ip = start_ip or "10.0.0.1"
-
-        # Derive a /24 prefix to simulate connected Wi-Fi devices
         try:
             parts = start_ip.split('.')
             prefix = '.'.join(parts[0:3])
         except Exception:
             prefix = '10.0.0'
 
-        # Simulate discovery of nearby devices on the same Wi-Fi
+        scan_ports = ports or [22, 80, 443, 8080]
         found_ips = []
         ip_open_ports = {}
-        num_found = random.randint(0, 5)
-        scan_ports = ports or [22, 80, 443, 8080]
-        for _ in range(num_found):
-            last = random.randint(2, 250)
-            ip = f"{prefix}.{last}"
-            found_ips.append(ip)
-            # Simulate per-device open ports (higher chance than before)
-            open_ports = [p for p in scan_ports if random.random() < 0.35]
-            ip_open_ports[ip] = open_ports
 
-        # Populate telemetry fields used by Queen.expand_colony
+        # If real_scan requested (or trait set), attempt ARP discovery + TCP connect scans
+        use_real = real_scan or self.telemetry.get('real_scan') or ('real_scan' in (self.traits or []))
+        if use_real:
+            # ARP discover neighbors on the /24
+            cidr = f"{prefix}.0/24"
+            try:
+                hosts = self._arp_discover(cidr) if getattr(self, '_HAS_SCAPY', False) else []
+            except Exception:
+                hosts = []
+            # include start_ip if not found
+            if start_ip and start_ip not in hosts:
+                hosts.append(start_ip)
+            # perform concurrent TCP scans for each host
+            try:
+                import concurrent.futures
+                with concurrent.futures.ThreadPoolExecutor(max_workers=10) as exe:
+                    futures = {exe.submit(self._tcp_scan_ports, h, scan_ports, 0.5): h for h in hosts}
+                    for f in concurrent.futures.as_completed(futures, timeout=10):
+                        h = futures[f]
+                        try:
+                            openp = f.result()
+                        except Exception:
+                            openp = []
+                        if openp:
+                            found_ips.append(h)
+                            ip_open_ports[h] = openp
+            except Exception:
+                # fallback: single-threaded scan of start_ip
+                try:
+                    openp = self._tcp_scan_ports(start_ip, scan_ports, timeout=0.5)
+                    if openp:
+                        found_ips.append(start_ip)
+                        ip_open_ports[start_ip] = openp
+                except Exception:
+                    pass
+        else:
+            # Simulated discovery (non-invasive) retains previous behavior
+            num_found = random.randint(0, 5)
+            for _ in range(num_found):
+                last = random.randint(2, 250)
+                ip = f"{prefix}.{last}"
+                found_ips.append(ip)
+                open_ports = [p for p in scan_ports if random.random() < 0.35]
+                ip_open_ports[ip] = open_ports
+
+        # Populate telemetry
         self.telemetry["ip_ranges"] = [f"{prefix}.0/24"]
         self.telemetry["found_ips"] = found_ips
         self.telemetry["ip_open_ports"] = ip_open_ports
         self.telemetry["ips_discovered"] = len(found_ips)
-        # Flatten open ports across discovered devices
         self.telemetry["open_ports"] = list({p for ports in ip_open_ports.values() for p in ports})
         self.telemetry["blocked_ports"] = []
 
@@ -891,13 +1004,11 @@ class Scout(BroodlingBase):
         self.telemetry["os_type"] = random.choice(["linux", "windows", "macos"])
         self.telemetry["connected_wifi"] = True
 
-        # Apply trait flags and possible fusions
+        # Apply trait flags and fusions
         self.apply_trait_flags(["network_probe", "port_scan"])
-        self.apply_trait_fusion({
-            ("network_probe", "stealth_mode"): "ghost_probe"
-        })
+        self.apply_trait_fusion({("network_probe", "stealth_mode"): "ghost_probe"})
 
-        # Fitness calculation: reward discoveries and open ports
+        # Fitness calculation
         self.fitness = len(self.telemetry["open_ports"]) * 3 + len(found_ips)
         self.cycle += 1
 
