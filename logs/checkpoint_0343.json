@@ -1,0 +1,2222 @@
+{
+  "schema_version": "2.2",
+  "timestamp": 1766451976.7712395,
+  "global_cycle": 8,
+  "stage": "juvenile",
+  "stage_cycle_count": 8,
+  "hive_population": 32,
+  "avg_fitness": 8.25,
+  "diversity_index": 8,
+  "role_distribution": {
+    "defender": 6,
+    "scout": 17,
+    "builder": 4,
+    "scanner": 1
+  },
+  "lineage_avg_depth": 4.0,
+  "last_reset_info": null,
+  "ips_discovered_total": 32,
+  "open_ports_total": 53,
+  "colonies_spawned": 7,
+  "innovation_events": [],
+  "fitness_scores": {},
+  "genetic_memory": [
+    "port_80",
+    "port_443",
+    "port_53"
+  ],
+  "broodling_traits": [
+    {
+      "id": null,
+      "traits": [
+        "dynamic_protocol_translation",
+        "port_80",
+        "port_53",
+        "port_443"
+      ],
+      "fitness": 5,
+      "telemetry": {
+        "blocked_ports": [
+          22,
+          80,
+          443,
+          3389,
+          3306
+        ],
+        "cpu_pct": 11.774182303719014,
+        "ram_pct": 27.987751146447245,
+        "io_wait": 5.09229955534291
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "port_80",
+        "port_53",
+        "port_443"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 23.61287177921987,
+        "ram_pct": 14.513854719682811,
+        "io_wait": 6.905826791566919,
+        "latency_ms": 5,
+        "os_type": "macos",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 1,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 1,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 5,
+      "telemetry": {
+        "blocked_ports": [
+          22,
+          80,
+          443,
+          3389,
+          3306
+        ],
+        "cpu_pct": 23.302326027479705,
+        "ram_pct": 7.522359768836847,
+        "io_wait": 6.478710034909803
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "port_80",
+        "port_53",
+        "port_443"
+      ],
+      "fitness": 3,
+      "telemetry": {
+        "resources_built": "relay",
+        "expansion_trigger": true
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 33.08838894923733,
+        "ram_pct": 36.85755679423106,
+        "io_wait": 8.768846965868192,
+        "latency_ms": 96,
+        "os_type": "windows",
+        "connected_wifi": true,
+        "traits": [
+          "port_scan",
+          "network_probe"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 1,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 0,
+      "telemetry": {
+        "scanned_ports": [
+          22,
+          80,
+          443
+        ],
+        "open_ports": [],
+        "blocked_ports": [
+          22,
+          80,
+          443
+        ],
+        "traits": [
+          "low_signature_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 8,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 19.56412463813869,
+        "ram_pct": 44.46078451740951,
+        "io_wait": 6.792160323350917,
+        "latency_ms": 79,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "port_scan",
+          "network_probe"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 2,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 1,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 36.54368932579183,
+        "ram_pct": 46.203570416028114,
+        "io_wait": 21.9905982673556,
+        "latency_ms": 130,
+        "os_type": "windows",
+        "connected_wifi": true,
+        "traits": [
+          "port_scan",
+          "network_probe"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 8,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 32.53832476639775,
+        "ram_pct": 44.03043089887138,
+        "io_wait": 9.20672848197703,
+        "latency_ms": 45,
+        "os_type": "windows",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 2,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 1,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 1,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 25.12003508974713,
+        "ram_pct": 35.923998363495826,
+        "io_wait": 11.596941195615747,
+        "latency_ms": 154,
+        "os_type": "macos",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 5,
+      "telemetry": {
+        "blocked_ports": [
+          22,
+          80,
+          443,
+          3389,
+          3306
+        ],
+        "cpu_pct": 7.39761985415474,
+        "ram_pct": 14.51131502835673,
+        "io_wait": 0.019601135075446585
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "os_detection",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 31.681053927139775,
+        "ram_pct": 36.91399032949789,
+        "io_wait": 7.290593868681491,
+        "latency_ms": 193,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 3,
+      "telemetry": {
+        "resources_built": "relay",
+        "expansion_trigger": true
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 3,
+      "telemetry": {
+        "resources_built": "relay",
+        "expansion_trigger": true
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 3,
+      "telemetry": {
+        "resources_built": "relay",
+        "expansion_trigger": true
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 42.04883122043361,
+        "ram_pct": 22.37467043650651,
+        "io_wait": 10.915048589490326,
+        "latency_ms": 167,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "port_scan",
+          "network_probe"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 55.528145812847725,
+        "ram_pct": 28.081236073326078,
+        "io_wait": 5.334928718342659,
+        "latency_ms": 23,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 1,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 1,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 5,
+      "telemetry": {
+        "blocked_ports": [
+          22,
+          80,
+          443,
+          3389,
+          3306
+        ],
+        "cpu_pct": 6.22840712918566,
+        "ram_pct": 21.923654479885922,
+        "io_wait": 12.389072459508663
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 58.5629981812824,
+        "ram_pct": 53.199493408585624,
+        "io_wait": 6.150578366566634,
+        "latency_ms": 193,
+        "os_type": "windows",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "colony_migration",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 5,
+      "telemetry": {
+        "blocked_ports": [
+          22,
+          80,
+          443,
+          3389,
+          3306
+        ],
+        "cpu_pct": 41.34342583910719,
+        "ram_pct": 48.96664952102469,
+        "io_wait": 1.8811180615322343
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 8,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 56.30075570222583,
+        "ram_pct": 58.04590491828071,
+        "io_wait": 11.368364364050944,
+        "latency_ms": 168,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "port_scan",
+          "network_probe"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 2,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 10,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 1,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 53.290403856476935,
+        "ram_pct": 26.61522416865836,
+        "io_wait": 16.02423633890527,
+        "latency_ms": 160,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "port_scan",
+          "network_probe"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 5.525920638421785,
+        "ram_pct": 24.7138274624319,
+        "io_wait": 18.16226561600066,
+        "latency_ms": 11,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "port_scan",
+          "network_probe"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 1,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 1,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "latency_compensation",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 5,
+      "telemetry": {
+        "blocked_ports": [
+          22,
+          80,
+          443,
+          3389,
+          3306
+        ],
+        "cpu_pct": 32.22720613670191,
+        "ram_pct": 40.64858204322162,
+        "io_wait": 13.36278209863105
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 51.162048447069886,
+        "ram_pct": 48.47847695607145,
+        "io_wait": 26.172754052343635,
+        "latency_ms": 97,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 1,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 26.79888829551135,
+        "ram_pct": 7.751964815627966,
+        "io_wait": 3.6789299935355557,
+        "latency_ms": 189,
+        "os_type": "windows",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 24.213742942795687,
+        "ram_pct": 8.50925305224104,
+        "io_wait": 6.048111754521161,
+        "latency_ms": 133,
+        "os_type": "linux",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "thermal_awareness",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 11,
+      "telemetry": {
+        "ip_ranges": [
+          "10.0.0.0/24"
+        ],
+        "found_ips": [
+          "10.0.0.1",
+          "10.0.0.84"
+        ],
+        "ip_open_ports": {
+          "10.0.0.1": [
+            80,
+            443,
+            53
+          ]
+        },
+        "ips_discovered": 2,
+        "open_ports": [
+          80,
+          443,
+          53
+        ],
+        "blocked_ports": [],
+        "cpu_pct": 15.08129795354478,
+        "ram_pct": 8.239177758925468,
+        "io_wait": 27.5845056387797,
+        "latency_ms": 19,
+        "os_type": "macos",
+        "connected_wifi": true,
+        "traits": [
+          "network_probe",
+          "port_scan"
+        ]
+      },
+      "trait_eval": {
+        "network_probe": 1,
+        "port_scan": 3,
+        "protocol_adapt": 0,
+        "resource_awareness": 1,
+        "os_detection": 1,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 1,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 1,
+        "environment_mimicry": 0,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 1,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "temporal_adapt",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 3,
+      "telemetry": {
+        "resources_built": "relay",
+        "expansion_trigger": true
+      },
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 0.0,
+      "telemetry": {},
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "colony_migration",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 0.0,
+      "telemetry": {},
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    },
+    {
+      "id": null,
+      "traits": [
+        "network_probe",
+        "low_signature_scan",
+        "port_scan",
+        "multi_channel_resilience",
+        "port_443",
+        "port_80",
+        "port_53"
+      ],
+      "fitness": 0.0,
+      "telemetry": {},
+      "trait_eval": {
+        "network_probe": 0,
+        "port_scan": 0,
+        "protocol_adapt": 0,
+        "resource_awareness": 0,
+        "os_detection": 0,
+        "thermal_awareness": 0,
+        "colony_migration": 0,
+        "role_assignment": 0,
+        "stealth_mode": 0,
+        "timing_obfuscation": 0,
+        "multi_channel_resilience": 0,
+        "low_signature_scan": 1,
+        "dynamic_protocol_translation": 0,
+        "energy_efficiency": 0,
+        "environment_mimicry": 1,
+        "adaptive_throttling": 1,
+        "colony_cooperation": 0,
+        "role_reassignment": 0,
+        "signal_masking": 1,
+        "temporal_adapt": 0,
+        "error_correction_adapt": 1,
+        "adaptive_sleep_cycles": 0,
+        "predictive_adapt": 0,
+        "self_healing": 0,
+        "contextual_decisioning": 0,
+        "latency_compensation": 0,
+        "collective_learning": 0,
+        "colony_resilience": 0,
+        "adaptive_encryption": 0,
+        "stealth_evolution": 0,
+        "trait_fusion": 0,
+        "lineage_memory": 0,
+        "evolutionary_mutation": 0
+      }
+    }
+  ]
+}

